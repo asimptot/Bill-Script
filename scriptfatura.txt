@@ -1,0 +1,300 @@
+USE [master]
+GO
+/****** Object:  Database [FaturaDb]    Script Date: 10/25/2013 22:02:05 ******/
+CREATE DATABASE [FaturaDb] ON  PRIMARY 
+( NAME = N'FaturaOtomasyon', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\DATA\FaturaOtomasyon.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'FaturaOtomasyon_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL10_50.SQLEXPRESS\MSSQL\DATA\FaturaOtomasyon_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [FaturaDb] SET COMPATIBILITY_LEVEL = 100
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [FaturaDb].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [FaturaDb] SET ANSI_NULL_DEFAULT OFF
+GO
+ALTER DATABASE [FaturaDb] SET ANSI_NULLS OFF
+GO
+ALTER DATABASE [FaturaDb] SET ANSI_PADDING OFF
+GO
+ALTER DATABASE [FaturaDb] SET ANSI_WARNINGS OFF
+GO
+ALTER DATABASE [FaturaDb] SET ARITHABORT OFF
+GO
+ALTER DATABASE [FaturaDb] SET AUTO_CLOSE OFF
+GO
+ALTER DATABASE [FaturaDb] SET AUTO_CREATE_STATISTICS ON
+GO
+ALTER DATABASE [FaturaDb] SET AUTO_SHRINK OFF
+GO
+ALTER DATABASE [FaturaDb] SET AUTO_UPDATE_STATISTICS ON
+GO
+ALTER DATABASE [FaturaDb] SET CURSOR_CLOSE_ON_COMMIT OFF
+GO
+ALTER DATABASE [FaturaDb] SET CURSOR_DEFAULT  GLOBAL
+GO
+ALTER DATABASE [FaturaDb] SET CONCAT_NULL_YIELDS_NULL OFF
+GO
+ALTER DATABASE [FaturaDb] SET NUMERIC_ROUNDABORT OFF
+GO
+ALTER DATABASE [FaturaDb] SET QUOTED_IDENTIFIER OFF
+GO
+ALTER DATABASE [FaturaDb] SET RECURSIVE_TRIGGERS OFF
+GO
+ALTER DATABASE [FaturaDb] SET  DISABLE_BROKER
+GO
+ALTER DATABASE [FaturaDb] SET AUTO_UPDATE_STATISTICS_ASYNC OFF
+GO
+ALTER DATABASE [FaturaDb] SET DATE_CORRELATION_OPTIMIZATION OFF
+GO
+ALTER DATABASE [FaturaDb] SET TRUSTWORTHY OFF
+GO
+ALTER DATABASE [FaturaDb] SET ALLOW_SNAPSHOT_ISOLATION OFF
+GO
+ALTER DATABASE [FaturaDb] SET PARAMETERIZATION SIMPLE
+GO
+ALTER DATABASE [FaturaDb] SET READ_COMMITTED_SNAPSHOT OFF
+GO
+ALTER DATABASE [FaturaDb] SET HONOR_BROKER_PRIORITY OFF
+GO
+ALTER DATABASE [FaturaDb] SET  READ_WRITE
+GO
+ALTER DATABASE [FaturaDb] SET RECOVERY SIMPLE
+GO
+ALTER DATABASE [FaturaDb] SET  MULTI_USER
+GO
+ALTER DATABASE [FaturaDb] SET PAGE_VERIFY CHECKSUM
+GO
+ALTER DATABASE [FaturaDb] SET DB_CHAINING OFF
+GO
+USE [FaturaDb]
+GO
+/****** Object:  Table [dbo].[Urun]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Urun](
+	[UrunID] [int] IDENTITY(1,1) NOT NULL,
+	[UrunAdi] [nvarchar](200) NULL,
+	[StokMiktari] [decimal](10, 2) NULL,
+	[BirimFiyatý] [decimal](10, 2) NULL,
+	[KritikStokMiktari] [decimal](10, 2) NULL,
+	[Eknot] [nvarchar](max) NULL,
+	[Aktiflik] [int] NULL,
+ CONSTRAINT [PK_Urun] PRIMARY KEY CLUSTERED 
+(
+	[UrunID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Sirket]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Sirket](
+	[SirketID] [int] IDENTITY(1,1) NOT NULL,
+	[SirketAdi] [nvarchar](500) NULL,
+	[VergiDairesi] [nvarchar](50) NULL,
+	[VergiTcNo] [char](11) NULL,
+	[Adres] [nvarchar](250) NULL,
+	[Telefon] [nchar](15) NULL,
+	[Aktiflik] [int] NULL,
+ CONSTRAINT [PK_Sirket] PRIMARY KEY CLUSTERED 
+(
+	[SirketID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Personel]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Personel](
+	[PersonelID] [int] IDENTITY(1,1) NOT NULL,
+	[PersonelAdiSoyadi] [nvarchar](50) NULL,
+	[Eposta] [nchar](100) NULL,
+	[Sifre] [nchar](100) NULL,
+	[Aktiflik] [int] NULL,
+	[EkNot] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Personel] PRIMARY KEY CLUSTERED 
+(
+	[PersonelID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MiktarTuru]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MiktarTuru](
+	[MiktarTuruID] [int] IDENTITY(1,1) NOT NULL,
+	[MiktarTuruAdi] [nvarchar](20) NULL,
+ CONSTRAINT [PK_MiktarTuru] PRIMARY KEY CLUSTERED 
+(
+	[MiktarTuruID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[IrsaliyeDurumu]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[IrsaliyeDurumu](
+	[IrsaliyeDurumuID] [int] IDENTITY(1,1) NOT NULL,
+	[IrsaliyeDurumuAdi] [nvarchar](20) NULL,
+ CONSTRAINT [PK_IrsaliyeDurumu] PRIMARY KEY CLUSTERED 
+(
+	[IrsaliyeDurumuID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FaturaTipi]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FaturaTipi](
+	[FaturaTipiID] [int] IDENTITY(1,1) NOT NULL,
+	[FaturaTipiAdi] [nvarchar](20) NULL,
+ CONSTRAINT [PK_FaturaTipi] PRIMARY KEY CLUSTERED 
+(
+	[FaturaTipiID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Cari]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Cari](
+	[CariID] [int] IDENTITY(1,1) NOT NULL,
+	[CariAdi] [nvarchar](500) NULL,
+	[VergiDairesi] [nvarchar](100) NULL,
+	[VergiTcNo] [char](11) NULL,
+	[Adres] [nvarchar](250) NULL,
+	[Telefon] [char](11) NULL,
+	[Fax] [char](11) NULL,
+	[EkNot] [nvarchar](max) NULL,
+	[Aktiflik] [int] NULL,
+ CONSTRAINT [PK_Cari] PRIMARY KEY CLUSTERED 
+(
+	[CariID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Fatura]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Fatura](
+	[FaturaID] [int] IDENTITY(1,1) NOT NULL,
+	[FaturaNo] [nvarchar](10) NULL,
+	[Tarih] [datetime] NULL,
+	[CariID] [int] NULL,
+	[FaturaTipiID] [int] NULL,
+	[IrsaliyeDurumuID] [int] NULL,
+	[NetTutar] [decimal](10, 2) NULL,
+	[Ýskonto] [decimal](4, 2) NULL,
+	[BrutTutar] [decimal](10, 2) NULL,
+	[KdvOrani] [decimal](4, 2) NULL,
+	[BrutTutarYazi] [nvarchar](500) NULL,
+	[EkNot] [nvarchar](max) NULL,
+	[Aktiflik] [int] NULL,
+	[SirketID] [int] NULL,
+ CONSTRAINT [PK_Fatura] PRIMARY KEY CLUSTERED 
+(
+	[FaturaID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[FaturaAyrinti]    Script Date: 10/25/2013 22:02:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[FaturaAyrinti](
+	[FaturaAyrintiID] [int] IDENTITY(1,1) NOT NULL,
+	[FaturaID] [int] NULL,
+	[UrunID] [int] NULL,
+	[BirimFiyati] [decimal](10, 2) NULL,
+	[Miktar] [decimal](10, 2) NULL,
+	[MiktarTuruID] [int] NULL,
+	[IskontoOrani] [decimal](4, 2) NULL,
+	[Aktiflik] [int] NULL,
+ CONSTRAINT [PK_FaturaAyrinti] PRIMARY KEY CLUSTERED 
+(
+	[FaturaAyrintiID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Default [DF_Sirket_Aktiflik]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Sirket] ADD  CONSTRAINT [DF_Sirket_Aktiflik]  DEFAULT ((1)) FOR [Aktiflik]
+GO
+/****** Object:  Default [DF_Personel_Aktiflik]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Personel] ADD  CONSTRAINT [DF_Personel_Aktiflik]  DEFAULT ((1)) FOR [Aktiflik]
+GO
+/****** Object:  ForeignKey [FK_Fatura_Cari]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Fatura]  WITH CHECK ADD  CONSTRAINT [FK_Fatura_Cari] FOREIGN KEY([CariID])
+REFERENCES [dbo].[Cari] ([CariID])
+GO
+ALTER TABLE [dbo].[Fatura] CHECK CONSTRAINT [FK_Fatura_Cari]
+GO
+/****** Object:  ForeignKey [FK_Fatura_FaturaTipi]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Fatura]  WITH CHECK ADD  CONSTRAINT [FK_Fatura_FaturaTipi] FOREIGN KEY([FaturaTipiID])
+REFERENCES [dbo].[FaturaTipi] ([FaturaTipiID])
+GO
+ALTER TABLE [dbo].[Fatura] CHECK CONSTRAINT [FK_Fatura_FaturaTipi]
+GO
+/****** Object:  ForeignKey [FK_Fatura_FaturaTipi1]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Fatura]  WITH CHECK ADD  CONSTRAINT [FK_Fatura_FaturaTipi1] FOREIGN KEY([FaturaTipiID])
+REFERENCES [dbo].[FaturaTipi] ([FaturaTipiID])
+GO
+ALTER TABLE [dbo].[Fatura] CHECK CONSTRAINT [FK_Fatura_FaturaTipi1]
+GO
+/****** Object:  ForeignKey [FK_Fatura_IrsaliyeDurumu]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Fatura]  WITH CHECK ADD  CONSTRAINT [FK_Fatura_IrsaliyeDurumu] FOREIGN KEY([IrsaliyeDurumuID])
+REFERENCES [dbo].[IrsaliyeDurumu] ([IrsaliyeDurumuID])
+GO
+ALTER TABLE [dbo].[Fatura] CHECK CONSTRAINT [FK_Fatura_IrsaliyeDurumu]
+GO
+/****** Object:  ForeignKey [FK_Fatura_Sirket]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[Fatura]  WITH CHECK ADD  CONSTRAINT [FK_Fatura_Sirket] FOREIGN KEY([SirketID])
+REFERENCES [dbo].[Sirket] ([SirketID])
+GO
+ALTER TABLE [dbo].[Fatura] CHECK CONSTRAINT [FK_Fatura_Sirket]
+GO
+/****** Object:  ForeignKey [FK_FaturaAyrinti_Fatura]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[FaturaAyrinti]  WITH CHECK ADD  CONSTRAINT [FK_FaturaAyrinti_Fatura] FOREIGN KEY([FaturaID])
+REFERENCES [dbo].[Fatura] ([FaturaID])
+GO
+ALTER TABLE [dbo].[FaturaAyrinti] CHECK CONSTRAINT [FK_FaturaAyrinti_Fatura]
+GO
+/****** Object:  ForeignKey [FK_FaturaAyrinti_MiktarTuru]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[FaturaAyrinti]  WITH CHECK ADD  CONSTRAINT [FK_FaturaAyrinti_MiktarTuru] FOREIGN KEY([MiktarTuruID])
+REFERENCES [dbo].[MiktarTuru] ([MiktarTuruID])
+GO
+ALTER TABLE [dbo].[FaturaAyrinti] CHECK CONSTRAINT [FK_FaturaAyrinti_MiktarTuru]
+GO
+/****** Object:  ForeignKey [FK_FaturaAyrinti_Urun]    Script Date: 10/25/2013 22:02:06 ******/
+ALTER TABLE [dbo].[FaturaAyrinti]  WITH CHECK ADD  CONSTRAINT [FK_FaturaAyrinti_Urun] FOREIGN KEY([UrunID])
+REFERENCES [dbo].[Urun] ([UrunID])
+GO
+ALTER TABLE [dbo].[FaturaAyrinti] CHECK CONSTRAINT [FK_FaturaAyrinti_Urun]
+GO
